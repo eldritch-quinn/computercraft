@@ -64,10 +64,10 @@ local function getAndSave(repo_path, save_path)
 end
 
 local function getAndSaveServer()
-    print("\n > Downloading sync server")
-    print("   - Downloading syncServer.lua from repo")
-    getAndSave("/syncServer.lua", DIR.."/syncServer.lua")
-    print(" - Sync server download successful")
+    print("\n > Downloading sync client")
+    print("   - Downloading sync.lua from repo")
+    getAndSave("/sync.lua", DIR.."/sync.lua")
+    print(" - Sync client download successful")
 end
 
 local function getAndSaveProgram()
