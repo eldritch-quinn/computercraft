@@ -21,7 +21,6 @@ local PROCESS_DEBUG_INFORMATION = {
 local DEPS = {}
 
 local CRASHED = false
-local SHELL_INDEX = multishell.getCurrent()
 
 local function printConfig()
     print(" > Configuration")
