@@ -8,4 +8,4 @@ local DIR = "/lua"
 local PROGRAM = "operator.lua"
 local PROGRAM_ARGS = " 10 1 Unnamed right left front false"
 
-shell.run(DIR..'/sync.lua '..CHANNEL..' '..REPO_FULL..' '..GITHUB_ACCESS_TOKEN..' '..DIR..' '..PROGRAM..' "'..PROGRAM_ARGS..'" '..tostring(DO_SETUP))
+local taskTab = shell.openTab(DIR..'/sync.lua '..CHANNEL..' '..REPO_FULL..' '..GITHUB_ACCESS_TOKEN..' '..DIR..' '..PROGRAM..' "'..PROGRAM_ARGS..'" '..tostring(DO_SETUP))

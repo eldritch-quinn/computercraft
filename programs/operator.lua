@@ -1,5 +1,4 @@
 local setup = require("/lua/lib/setupUtils")
-local length = require("/lua/lib/typeUtils").length
 local typeUtils = require("/lua/lib/typeUtils")
 local pretty = require "cc.pretty"
 
@@ -9,7 +8,7 @@ local SHELL = 1
 
 local wrappedPers = setup.getPers({
     "modem",
-    "drive",
+    "drive"
 })
 
 
@@ -21,12 +20,11 @@ local testJson = '{"id":1,"rpv2":"000.001","color":"gold","array":[1,2,3],"boole
 
 
 
-if disk.isPresent("right") then
-    local name = disk.getLabel("right")
-   
-    vrtapi.resetScrn(mon)
-    mon.write("Disk loaded:")
-    vrtapi.newLine(mon)
+if disk.isPresent("bottom") then
+    local name = disk.getLabel("bottom")
+
+    term.write("Disk loaded:")
+
     mon.write(name)
   elseif mon then
     mon.write("No disk loaded")
