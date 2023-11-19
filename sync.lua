@@ -150,7 +150,11 @@ local function startProgram()
     print("\n <---> Starting Program")
     shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
 
-    if multishell.getCount() ~= currentProcessCount + 1 then CRASHED = true end
+    print("\n Program started on Tab "..currentProcessCount+1)
+
+    if multishell.getCount() == currentProcessCount + 1 then 
+        CRASHED = false 
+    end
 
     print("\n <---> Program Exited")
 end
