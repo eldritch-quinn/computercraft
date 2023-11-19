@@ -148,11 +148,12 @@ local function startProgram()
     local currentProcessCount = multishell.getCount()
 
     print("\n <---> Starting Program")
-    shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+    local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+    shell.switchTab(tab)
 
     print("\n Program started on Tab "..currentProcessCount+1)
 
-    if multishell.getCount() == currentProcessCount + 1 then 
+    if multishell.getFocus() ~= tab then 
         CRASHED = false 
     end
 
@@ -164,7 +165,6 @@ local function startListener()
     local modem = peripheral.find("modem")
     if modem then modem.open(CHANNEL) end
     if modem == nil then print("\n <---> No modem present, networking disabled") end
-    
 
     local needsRestart = false
 
