@@ -143,8 +143,15 @@ local function runFirstTimeSetup()
 end
 
 local function startProgram()
+
+    local shellIndex = multishell.getFocus()
+    local currentProcessCount = multishell.getCount()
+
     print("\n <---> Starting Program")
-    CRASHED = not shell.openTab(DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+    shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+
+    if multishell.getCount() ~= currentProcessCount + 1 then CRASHED = true end
+
     print("\n <---> Program Exited")
 end
 
