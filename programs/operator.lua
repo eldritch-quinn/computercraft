@@ -33,15 +33,15 @@ while true do
   term.write(motd.."\n\n")
 
   local input = read()
-  print(input)
-  if input ~= nil or string.len(input) ~= 0 then
-    motd = ' - "'..input..'"'
 
-  elseif input == "end" then
+  if input ~= nil or string.len(input) ~= 0 then goto continue end
 
-    multishell.setTitle(TAB_INDEX, ":"..TAB_INDEX)
-  end
+  motd = ' - "'..input..'"'
 
+  if input == "end" then multishell.setTitle(TAB_INDEX, "/") goto continue end
+  
+  
+  ::continue::
 end
 
 
