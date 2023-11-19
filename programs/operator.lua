@@ -18,9 +18,10 @@ local isArray = false
 
 local testJson = '{"id":1,"rpv2":"000.001","color":"gold","array":[1,2,3],"boolean":true,"null":null,"number":123,"object":{"a":"b","c":"d"},"string":"Hello World"}'
 
+term.write("Hello world!")
 
-
-if disk.isPresent("bottom") then
+if 1==2 then
+  if disk.isPresent("bottom") then
     local name = disk.getLabel("bottom")
 
     term.write("Disk loaded:")
@@ -31,8 +32,10 @@ if disk.isPresent("bottom") then
   else
     print("No monitor available")
   end
+end
+
   
 
-local convertedTable = textutils.unserialiseJSON(testJson, { parse_null = true })
+--local convertedTable = textutils.unserialiseJSON(testJson, { parse_null = true })
 
-pretty.pretty(convertedTable)
+--pretty.pretty(convertedTable)
