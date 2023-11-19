@@ -244,7 +244,8 @@ local function startThreads()
 
     print("\n <---> Crash detected, closing crashed tab...")
 
-    
+    multishell.setFocus(TAB_INDEX)
+    exit()
     --startListener()
 end
 

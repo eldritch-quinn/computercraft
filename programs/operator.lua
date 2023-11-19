@@ -38,7 +38,7 @@ while true do
 
   motd = ' - "'..input..'"'
 
-  if input == "end" then multishell.setTitle(TAB_INDEX, "/") exit() goto continue end
+  if input == "end" then goto exit end
   
   
   ::continue::
@@ -61,8 +61,8 @@ if 1==2 then
 end
 
 
-
-
+::exit::
+multishell.setTitle(TAB_INDEX, "/")
 --local convertedTable = textutils.unserialiseJSON(testJson, { parse_null = true })
 
 --pretty.pretty(convertedTable)
