@@ -1,5 +1,4 @@
 local ARGS = { ... }
-setTitle(1, "shell")
 local CHANNEL = tonumber(ARGS[1]) or 40100
 local TAB_INDEX = ARGS[2]
 local REPO_FULL = ARGS[3]
@@ -180,11 +179,11 @@ local function startProgram()
 
     if TAB_INDEX == "+" then
 
-        print("\n <---> Starting Program")
+        --print("\n <---> Starting Program")
 
         TAB_INDEX = currentProcessCount + 1
 
-        print("\n Program opening on Tab "..TAB_INDEX)
+        --print("\n Program opening on Tab "..TAB_INDEX)
 
         local tab = shell.openTab("bg "..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
         --if tab == nil then CRASHED = true end
@@ -192,11 +191,13 @@ local function startProgram()
         multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
         
     else 
-        print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
-        print("\n    > runningProgram : "..shell.getRunningProgram())
-        print("\n    > operator resolved path : "..shell.resolve(PROGRAM))
-        print("\n")
+        --print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
+        --print("\n    > runningProgram : "..shell.getRunningProgram())
+        --print("\n    > operator resolved path : "..shell.resolve(PROGRAM))
+        --print("\n")
     end
+
+    printProcessInformation()
 
     --if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then CRASHED = true print("\n <---> Program Exited") end
 end
@@ -261,7 +262,6 @@ local function startListener()
 end
 
 local function startThreads()
-    term.clear();
     while not CRASHED do 
         PROCESS_DEBUG_INFORMATION.RUNNING = multishell.getTitle(multishell.getCurrent())
         PROCESS_DEBUG_INFORMATION.FOCUSED = multishell.getTitle(multishell.getFocus())
