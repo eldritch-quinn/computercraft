@@ -29,9 +29,7 @@ while true do
 
   print("\n > runningProgram : "..shell.getRunningProgram())
 
-
-  
-  term.write(motd.."\n")
+  term.write(motd.."\n\n")
 
   local input = read()
   print(input)
