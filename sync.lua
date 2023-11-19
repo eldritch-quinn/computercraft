@@ -164,12 +164,13 @@ local function startProgram()
         shell.switchTab(TAB_INDEX)
         
     else 
-        print("\n <---> "..PROGRAM.." Running")
+        print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
         print("\n    > runningProgram : "..shell.getRunningProgram())
         print("\n    > operator resolved path : "..shell.resolve(PROGRAM))
+        print("\n")
     end
 
-    if shell.getRunningProgram() ~= shell.resolve("PROGRAM.lua") and multishell.getFocus() ~= TAB_INDEX then
+    if multishell.getCurrent() ~= shell.resolve("PROGRAM.lua") and multishell.getFocus() ~= TAB_INDEX then
         CRASHED = true 
         print("\n <---> Program Exited")
     end
