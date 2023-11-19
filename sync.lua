@@ -150,7 +150,7 @@ local function startProgram()
     print("\n <---> Starting Program")
     local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
 
-    --multishell.setTitle(tab, PROGRAM)
+    multishell.setTitle(tab, multishell.getTitle(tab)..":"..tab)
     shell.switchTab(tab)
     
     print("\n Program started on Tab "..tab)
