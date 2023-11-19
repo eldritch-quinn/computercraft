@@ -149,12 +149,14 @@ local function startProgram()
 
     print("\n <---> Starting Program")
     local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
-    shell.switchTab(tab)
 
-    print("\n Program started on Tab "..currentProcessCount+1)
+    --multishell.setTitle(tab, PROGRAM)
+    shell.switchTab(tab)
+    
+    print("\n Program started on Tab "..tab)
 
     if multishell.getFocus() ~= tab then 
-        CRASHED = false 
+        CRASHED = true 
     end
 
     print("\n <---> Program Exited")
@@ -225,8 +227,8 @@ local function startThreads()
         parallel.waitForAny(startListener, startProgram)
         sleep(0.5)
     end
-    print("\n <---> Crash detected, starting standalone listener...")
-    startListener()
+    --print("\n <---> Crash detected, starting standalone listener...")
+    --startListener()
 end
 
 local function start()
