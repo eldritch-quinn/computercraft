@@ -1,6 +1,6 @@
 local setup = require("/lua/lib/setupUtils")
 local typeUtils = require("/lua/lib/typeUtils")
-local pretty = require "cc.pretty"
+local pretty = require("cc.pretty")
 
 local args = { ... }
 
