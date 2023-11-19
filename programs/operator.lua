@@ -32,9 +32,10 @@ while true do
 
   term.write(motd.."\n\n")
 
+  ::input::
   local input = read()
 
-  if input ~= nil or string.len(input) ~= 0 then goto continue end
+  if input ~= nil or string.len(input) ~= 0 then goto input end
 
   motd = ' - "'..input..'"'
 
