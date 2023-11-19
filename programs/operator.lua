@@ -27,7 +27,8 @@ while true do
   term.setCursorPos(1, 1)
   term.write("Hello world!\nI'm '"..TAB_INDEX.."'!")
 
-  print("\n > runningProgram : "..shell.getRunningProgram())
+  print("\n > "..shell.getRunningProgram())
+  print("\n > Tab Index : "..multishell.getTitle(TAB_INDEX))
 
   term.write(motd.."\n\n")
 
