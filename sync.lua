@@ -160,7 +160,7 @@ local function startProgram()
         local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
         --if tab == nil then CRASHED = true end
 
-        multishell.setTitle(TAB_INDEX, multishell.getTitle(TAB_INDEX)..":"..TAB_INDEX)
+        multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
         shell.switchTab(TAB_INDEX)
         
     else 
@@ -170,7 +170,7 @@ local function startProgram()
         print("\n")
     end
 
-    if multishell.getTitle(TAB_INDEX) == ":"..TAB_INDEX and multishell.getFocus() ~= TAB_INDEX then
+    if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then
         CRASHED = true 
         print("\n <---> Program Exited")
     end
