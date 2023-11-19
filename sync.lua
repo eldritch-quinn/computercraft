@@ -180,25 +180,28 @@ local function startProgram()
 
         --print("\n <---> Starting Program")
 
-
+        TAB_INDEX = currentProcessCount + 1
 
         --print("\n Program opening on Tab "..TAB_INDEX)
 
         local tab = shell.openTab("bg "..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
         --if tab == nil then CRASHED = true end
 
-        TAB_INDEX = tab
+        
 
         multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
         
     else 
+
+        printProcessInformation()
+
         --print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
         --print("\n    > runningProgram : "..shell.getRunningProgram())
         --print("\n    > operator resolved path : "..shell.resolve(PROGRAM))
         --print("\n")
     end
 
-    printProcessInformation()
+    
 
     --if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then CRASHED = true print("\n <---> Program Exited") end
 end
