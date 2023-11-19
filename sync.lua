@@ -144,7 +144,7 @@ end
 
 local function startProgram()
     print("\n <---> Starting Program")
-    CRASHED = not shell.run(DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+    CRASHED = not shell.openTab(DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
     print("\n <---> Program Exited")
 end
 
