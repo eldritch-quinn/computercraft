@@ -33,7 +33,7 @@ local function printConfig()
 end
 
 local function printProcessInformation()
-    clear()
+    term.clear()
 
     term.setCursorPos(1,1)
     print(" > Configuration")
