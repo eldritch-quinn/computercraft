@@ -7,6 +7,7 @@ local DIR = ARGS[5]
 local PROGRAM = ARGS[6]
 local PROGRAM_ARGS = ARGS[7]
 local DO_SETUP = ARGS[8] == "true" or false
+local ONLINE = true
 
 term.clear()
 multishell.setTitle(1, "shell")
@@ -32,7 +33,7 @@ local function printProcessInformation(status)
 
     local new_P_D_I = {}
 
-    new_P_D_I["STATUS"] = status or P_D_I["STATUS"]
+    new_P_D_I["STATUS"] = status
     new_P_D_I["PROGRAM"] = PROGRAM
     new_P_D_I["RUNNING"] = multishell.getCurrent()
     new_P_D_I["FOCUS"] = multishell.getFocus()
@@ -43,15 +44,17 @@ local function printProcessInformation(status)
     local longest_key = #"PROGRAM_ARGS"
 
     term.setCursorPos(1,1)
-    print(" > Process Information")
+    print(" > "..PROGRAM.." Information")
     term.setCursorPos(4,2)
     local x, y = term.getCursorPos()
     for k, v in pairs(new_P_D_I) do
-        --if P_D_I[v] ~= nil or new_P_D_I[v] ~= P_D_I[v] then
-            --for k, v in pairs()
-        term.clearLine()
-        write(""..string.rep(' ', longest_key-#k)..k.." : "..v)
-        --end
+        if P_D_I[k] == nil then
+            term.clearLine()
+            write(""..string.rep(' ', longest_key-#k)..k.." : "..v)
+        else
+            term.clearLine()
+        end
+        
         y = y + 1
         term.setCursorPos(4,y)
         --term.setCursorPos(5,term.getCursorPos().y + 1)
@@ -204,8 +207,13 @@ local function startProgram()
         multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
         
     else 
-
-        printProcessInformation("RUNNING")
+        if currentProcessCount > 1 then
+            printProcessInformation("RUNNING")
+        else
+            printProcessInformation("OFFLINE")
+            CRASHED = true
+        end
+        
 
         --print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
         --print("\n    > runningProgram : "..shell.getRunningProgram())
@@ -284,7 +292,7 @@ local function startThreads()
     end
 
     print("\n <---> Crash detected, closing crashed tab...")
-    --startListener()
+    startListener()
 end
 
 local function start()

@@ -1,7 +1,7 @@
 local setup = require("/lua/lib/setupUtils")
 local typeUtils = require("/lua/lib/typeUtils")
 local pretty = require("cc.pretty")
-local TAB_INDEX = multishell.getCurrent()
+local TAB_INDEX = multishell.getCount()
 local args = { ... }
 
 local wrappedPers = setup.getPers({
@@ -37,13 +37,13 @@ while true do
 
   if input == "end" then 
     --goto slash 
-    multishell.setTitle(TAB_INDEX, "")
+    multishell.setTitle(TAB_INDEX, "/")
     break
+    --goto stop
   end
 
   ::continue::
 end
-
 
 
 if 1==2 then
@@ -59,6 +59,7 @@ if 1==2 then
     print("No monitor available")
   end
 end
+
 
 
 
