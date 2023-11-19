@@ -166,6 +166,8 @@ local function startProgram()
     else 
         print("\n <---> "..PROGRAM.." Running")
         print("\n    > runningProgram : "..shell.getRunningProgram())
+        print("\n    > operator resolved path : "..shell.resolve(PROGRAM..".lua"))
+        
         --shell.resolve("PROGRAM.lua")
 
     end

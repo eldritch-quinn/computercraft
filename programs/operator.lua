@@ -24,9 +24,10 @@ local testJson = '{"id":1,"rpv2":"000.001","color":"gold","array":[1,2,3],"boole
 while true do 
   term.clear()
   term.setCursorPos(1, 1)
+  term.write("Hello world!\n")
+
 
   
-  term.write("Hello world!")
   term.write(motd)
 
   local input = read()
