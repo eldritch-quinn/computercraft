@@ -164,8 +164,9 @@ local function startProgram()
         shell.switchTab(TAB_INDEX)
         
     else 
-        print("\n <---> Program Running")
-        
+        print("\n <---> "..PROGRAM.." Running")
+        print("\n    > runningProgram : "..shell.getRunningProgram())
+        --shell.resolve("PROGRAM.lua")
 
     end
 
