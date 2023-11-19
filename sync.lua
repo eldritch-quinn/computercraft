@@ -9,11 +9,26 @@ local PROGRAM = ARGS[6]
 local PROGRAM_ARGS = ARGS[7]
 local DO_SETUP = ARGS[8] == "true" or false
 
+local PROCESS_DEBUG_INFORMATION = {
+    
+}
+
 local DEPS = {}
 
 local CRASHED = false
+local SHELL_INDEX = multishell.getCurrent()
 
 local function printConfig()
+    print(" > Configuration")
+    print("    - Channel: "..CHANNEL)
+    print("    - Channel: "..CHANNEL)
+    print("    - Full Repo URL: "..REPO_FULL)
+    print("    - GitHub Access Token: "..GITHUB_ACCESS_TOKEN)
+    print("    - Directory: "..DIR)
+    print("    - Program: "..PROGRAM..PROGRAM_ARGS)
+end
+
+local function printProcessInformation()
     print(" > Configuration")
     print("    - Channel: "..CHANNEL)
     print("    - Channel: "..CHANNEL)
@@ -244,8 +259,7 @@ local function startThreads()
 
     print("\n <---> Crash detected, closing crashed tab...")
 
-    multishell.setFocus(TAB_INDEX)
-    exit()
+
     --startListener()
 end
 

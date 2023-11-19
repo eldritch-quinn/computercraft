@@ -40,7 +40,6 @@ while true do
 
   if input == "end" then goto exit end
   
-  
   ::continue::
 end
 
