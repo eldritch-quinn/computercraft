@@ -34,6 +34,7 @@ while true do
   term.write(motd.."\n")
 
   local input = read()
+  print(input)
   if input ~= nil or string.len(input) ~= 0 then
     motd = ' - "'..input..'"'
 
