@@ -152,12 +152,17 @@ local function startProgram()
     local currentProcessCount = multishell.getCount()
 
     if TAB_INDEX == "+" then
-        print("\n Program started on Tab "..TAB_INDEX)
 
         local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
-        multishell.setTitle(TAB_INDEX, multishell.getTitle(tab)..":"..tab)
-        shell.switchTab(tab)
+        --if tab == nil then CRASHED = true end
+
         TAB_INDEX = tab
+
+        print("\n Program started on Tab "..TAB_INDEX)
+        
+        multishell.setTitle(TAB_INDEX, multishell.getTitle(TAB_INDEX)..":"..TAB_INDEX)
+        shell.switchTab(TAB_INDEX)
+        
     end
 
     if shell.getRunningProgram() ~= shell.resolve("PROGRAM.lua") and multishell.getFocus() ~= TAB_INDEX then
