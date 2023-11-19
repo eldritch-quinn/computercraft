@@ -38,7 +38,7 @@ while true do
 
   motd = ' - "'..input..'"'
 
-  if input == "end" then goto exit end
+  if input == "end" then goto slash end
   
   ::continue::
 end
@@ -60,7 +60,7 @@ if 1==2 then
 end
 
 
-::exit::
+::slash::
 multishell.setTitle(TAB_INDEX, "/")
 --local convertedTable = textutils.unserialiseJSON(testJson, { parse_null = true })
 

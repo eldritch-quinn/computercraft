@@ -1,5 +1,5 @@
 local ARGS = { ... }
-
+setTitle(1, "shell")
 local CHANNEL = tonumber(ARGS[1]) or 40100
 local TAB_INDEX = ARGS[2]
 local REPO_FULL = ARGS[3]
@@ -10,7 +10,13 @@ local PROGRAM_ARGS = ARGS[7]
 local DO_SETUP = ARGS[8] == "true" or false
 
 local PROCESS_DEBUG_INFORMATION = {
-    
+    {
+        "STATUS", "STARTING",
+        "PROGRAM", PROGRAM,
+        "RUNNING","sync.lua",
+        "CHANNEL", CHANNEL,
+        "DIR", DIR,
+    }
 }
 
 local DEPS = {}
@@ -29,13 +35,21 @@ local function printConfig()
 end
 
 local function printProcessInformation()
+    clear()
+
+    term.setCursorPos(1,1)
     print(" > Configuration")
-    print("    - Channel: "..CHANNEL)
-    print("    - Channel: "..CHANNEL)
-    print("    - Full Repo URL: "..REPO_FULL)
-    print("    - GitHub Access Token: "..GITHUB_ACCESS_TOKEN)
-    print("    - Directory: "..DIR)
-    print("    - Program: "..PROGRAM..PROGRAM_ARGS)
+    term.setCursorPos(4,2)
+    for k, v in pairs(PROCESS_DEBUG_INFORMATION) do
+        write(" > "..k.."  : "..v.."\n")
+        --term.setCursorPos(5,term.getCursorPos().y + 1)
+    end
+    
+    
+    --print("     > PROGRAM : "..PROCESS_DEBUG_INFORMATION.PROGRAM)
+    --print("     > RUNNING : "..PROCESS_DEBUG_INFORMATION.RUNNING)
+    --print("     > CHANNEL : "..PROCESS_DEBUG_INFORMATION.CHANNEL)
+    --print("     > DIR     : "..PROCESS_DEBUG_INFORMATION.DIR)
 end
 
 local function decode64(data)
@@ -172,11 +186,10 @@ local function startProgram()
 
         print("\n Program opening on Tab "..TAB_INDEX)
 
-        local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+        local tab = shell.openTab("bg "..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
         --if tab == nil then CRASHED = true end
 
         multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
-        shell.switchTab(TAB_INDEX)
         
     else 
         print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
@@ -185,10 +198,7 @@ local function startProgram()
         print("\n")
     end
 
-    if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then
-        CRASHED = true 
-        print("\n <---> Program Exited")
-    end
+    --if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then CRASHED = true print("\n <---> Program Exited") end
 end
 
 local function startListener()
@@ -253,8 +263,12 @@ end
 local function startThreads()
     term.clear();
     while not CRASHED do 
+        PROCESS_DEBUG_INFORMATION.RUNNING = multishell.getTitle(multishell.getCurrent())
+        PROCESS_DEBUG_INFORMATION.FOCUSED = multishell.getTitle(multishell.getFocus())
+
         parallel.waitForAny(startListener, startProgram)
         sleep(0.5)
+        
     end
 
     print("\n <---> Crash detected, closing crashed tab...")
