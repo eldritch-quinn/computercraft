@@ -9,13 +9,13 @@ local PROGRAM_ARGS = ARGS[7]
 local DO_SETUP = ARGS[8] == "true" or false
 
 local PROCESS_DEBUG_INFORMATION = {
-    {
-        "STATUS", "STARTING",
-        "PROGRAM", PROGRAM,
-        "RUNNING","sync.lua",
-        "CHANNEL", CHANNEL,
-        "DIR", DIR,
-    }
+
+    "STATUS", "STARTING",
+    "PROGRAM", PROGRAM,
+    "RUNNING","sync.lua",
+    "CHANNEL", CHANNEL,
+    "DIR", DIR,
+
 }
 
 local DEPS = {}
