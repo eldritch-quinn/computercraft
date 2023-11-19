@@ -1,8 +1,7 @@
 local setup = require("/lua/lib/setupUtils")
 local typeUtils = require("/lua/lib/typeUtils")
 local pretty = require("cc.pretty")
-local TAB_INDEX = multishell.getFocus()	+ 1
-
+local TAB_INDEX = multishell.getCurrent()
 local args = { ... }
 
 local wrappedPers = setup.getPers({
@@ -36,8 +35,12 @@ while true do
 
   motd = ' - "'..input..'"'
 
-  if input == "end" then goto slash end
-  
+  if input == "end" then 
+    --goto slash 
+    multishell.setTitle(TAB_INDEX, "")
+    break
+  end
+
   ::continue::
 end
 
@@ -58,7 +61,7 @@ if 1==2 then
 end
 
 
-::slash::
+
 --multishell.setTitle(TAB_INDEX, "/")
 --local convertedTable = textutils.unserialiseJSON(testJson, { parse_null = true })
 

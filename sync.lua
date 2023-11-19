@@ -8,15 +8,11 @@ local PROGRAM = ARGS[6]
 local PROGRAM_ARGS = ARGS[7]
 local DO_SETUP = ARGS[8] == "true" or false
 
-local PROCESS_DEBUG_INFORMATION = {
+term.clear()
+multishell.setTitle(1, "shell")
 
-    "STATUS", "STARTING",
-    "PROGRAM", PROGRAM,
-    "RUNNING","sync.lua",
-    "CHANNEL", CHANNEL,
-    "DIR", DIR,
+local P_D_I = {}
 
-}
 
 local DEPS = {}
 
@@ -32,14 +28,32 @@ local function printConfig()
     print("    - Program: "..PROGRAM..PROGRAM_ARGS)
 end
 
-local function printProcessInformation()
-    term.clear()
+local function printProcessInformation(status)
+
+    local new_P_D_I = {}
+
+    new_P_D_I["STATUS"] = status or P_D_I["STATUS"]
+    new_P_D_I["PROGRAM"] = PROGRAM
+    new_P_D_I["RUNNING"] = multishell.getCurrent()
+    new_P_D_I["FOCUS"] = multishell.getFocus()
+    new_P_D_I["TAB_INDEX"] = TAB_INDEX
+    new_P_D_I["CHANNEL"] = CHANNEL
+    new_P_D_I["PROGRAM_ARGS"] = PROGRAM_ARGS
+
+    local longest_key = #"PROGRAM_ARGS"
 
     term.setCursorPos(1,1)
-    print(" > Configuration")
+    print(" > Process Information")
     term.setCursorPos(4,2)
-    for k, v in pairs(PROCESS_DEBUG_INFORMATION) do
-        write(" > "..k.."  : "..v.."\n")
+    local x, y = term.getCursorPos()
+    for k, v in pairs(new_P_D_I) do
+        --if P_D_I[v] ~= nil or new_P_D_I[v] ~= P_D_I[v] then
+            --for k, v in pairs()
+        term.clearLine()
+        write(""..string.rep(' ', longest_key-#k)..k.." : "..v)
+        --end
+        y = y + 1
+        term.setCursorPos(4,y)
         --term.setCursorPos(5,term.getCursorPos().y + 1)
     end
     
@@ -184,14 +198,14 @@ local function startProgram()
 
         --print("\n Program opening on Tab "..TAB_INDEX)
 
-        local tab = shell.openTab("bg "..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+        local tab = shell.openTab(DIR.."/programs/"..PROGRAM..''..PROGRAM_ARGS..'');
         --if tab == nil then CRASHED = true end
 
         multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
         
     else 
 
-        printProcessInformation()
+        printProcessInformation("RUNNING")
 
         --print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
         --print("\n    > runningProgram : "..shell.getRunningProgram())
@@ -199,9 +213,7 @@ local function startProgram()
         --print("\n")
     end
 
-    
-
-    --if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then CRASHED = true print("\n <---> Program Exited") end
+    if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then CRASHED = true end
 end
 
 local function startListener()
@@ -265,8 +277,6 @@ end
 
 local function startThreads()
     while not CRASHED do 
-        PROCESS_DEBUG_INFORMATION.RUNNING = multishell.getTitle(multishell.getCurrent())
-        PROCESS_DEBUG_INFORMATION.FOCUSED = multishell.getTitle(multishell.getFocus())
 
         parallel.waitForAny(startListener, startProgram)
         sleep(0.5)
@@ -274,8 +284,6 @@ local function startThreads()
     end
 
     print("\n <---> Crash detected, closing crashed tab...")
-
-
     --startListener()
 end
 
