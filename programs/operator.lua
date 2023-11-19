@@ -38,7 +38,7 @@ while true do
 
   motd = ' - "'..input..'"'
 
-  if input == "end" then multishell.setTitle(TAB_INDEX, "/") goto continue end
+  if input == "end" then multishell.setTitle(TAB_INDEX, "/") exit() goto continue end
   
   
   ::continue::
