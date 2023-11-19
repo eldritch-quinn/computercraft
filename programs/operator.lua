@@ -1,11 +1,9 @@
 local setup = require("/lua/lib/setupUtils")
 local typeUtils = require("/lua/lib/typeUtils")
 local pretty = require("cc.pretty")
-local TAB_INDEX = multishell.getCurrent()
+local TAB_INDEX = multishell.getFocus()	+ 1
 
 local args = { ... }
-
-local SHELL = 1
 
 local wrappedPers = setup.getPers({
     "modem",

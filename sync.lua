@@ -187,8 +187,6 @@ local function startProgram()
         local tab = shell.openTab("bg "..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
         --if tab == nil then CRASHED = true end
 
-        
-
         multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
         
     else 
