@@ -59,7 +59,7 @@ end
 
 
 ::slash::
-multishell.setTitle(TAB_INDEX, "/")
+--multishell.setTitle(TAB_INDEX, "/")
 --local convertedTable = textutils.unserialiseJSON(testJson, { parse_null = true })
 
 --pretty.pretty(convertedTable)
