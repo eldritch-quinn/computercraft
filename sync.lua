@@ -167,9 +167,6 @@ local function startProgram()
         print("\n <---> "..PROGRAM.." Running")
         print("\n    > runningProgram : "..shell.getRunningProgram())
         print("\n    > operator resolved path : "..shell.resolve(PROGRAM))
-        
-        --shell.resolve("PROGRAM.lua")
-
     end
 
     if shell.getRunningProgram() ~= shell.resolve("PROGRAM.lua") and multishell.getFocus() ~= TAB_INDEX then

@@ -1,6 +1,7 @@
 local setup = require("/lua/lib/setupUtils")
 local typeUtils = require("/lua/lib/typeUtils")
 local pretty = require("cc.pretty")
+local TAB_INDEX = multishell.getFocus()
 
 local args = { ... }
 
@@ -31,12 +32,15 @@ while true do
 
 
   
-  term.write(motd)
+  term.write(motd.."\n")
 
   local input = read()
   if input ~= nil or string.len(input) ~= 0 then
     motd = ' - "'..input..'"'
 
+  elseif input == "end" then
+
+    multishell.setTitle(TAB_INDEX, typeUtils.split(multishell.getTitle(TAB_INDEX), ":")[1])
   end
 
 end
