@@ -26,6 +26,9 @@ while true do
   term.setCursorPos(1, 1)
   term.write("Hello world!\n")
 
+  term.write("Hello world!\n")
+  print("\n > runningProgram : "..shell.getRunningProgram())
+
 
   
   term.write(motd)
