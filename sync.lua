@@ -1,12 +1,13 @@
 local ARGS = { ... }
 
 local CHANNEL = tonumber(ARGS[1]) or 40100
-local REPO_FULL = ARGS[2]
-local GITHUB_ACCESS_TOKEN = ARGS[3]
-local DIR = ARGS[4]
-local PROGRAM = ARGS[5]
-local PROGRAM_ARGS = ARGS[6]
-local DO_SETUP = ARGS[7] == "true" or false
+local TAB_INDEX = ARGS[2]
+local REPO_FULL = ARGS[3]
+local GITHUB_ACCESS_TOKEN = ARGS[4]
+local DIR = ARGS[5]
+local PROGRAM = ARGS[6]
+local PROGRAM_ARGS = ARGS[7]
+local DO_SETUP = ARGS[8] == "true" or false
 
 local DEPS = {}
 
@@ -14,6 +15,7 @@ local CRASHED = false
 
 local function printConfig()
     print(" > Configuration")
+    print("    - Channel: "..CHANNEL)
     print("    - Channel: "..CHANNEL)
     print("    - Full Repo URL: "..REPO_FULL)
     print("    - GitHub Access Token: "..GITHUB_ACCESS_TOKEN)
@@ -144,20 +146,25 @@ end
 
 local function startProgram()
 
+    print("\n <---> Starting Program")
+    
     local shellIndex = multishell.getFocus()
     local currentProcessCount = multishell.getCount()
 
-    print("\n <---> Starting Program")
-    local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+    if TAB_INDEX == "+" then
+        print("\n Program started on Tab "..TAB_INDEX)
 
-    multishell.setTitle(tab, multishell.getTitle(tab)..":"..tab)
-    shell.switchTab(tab)
-    
-    print("\n Program started on Tab "..tab)
+        local tab = shell.openTab(""..DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+        multishell.setTitle(TAB_INDEX, multishell.getTitle(tab)..":"..tab)
+        shell.switchTab(tab)
+        TAB_INDEX = tab
+    end
 
-    if multishell.getFocus() ~= tab then 
+    if shell.getRunningProgram() ~= shell.resolve("PROGRAM.lua") and multishell.getFocus() ~= TAB_INDEX then
         CRASHED = true 
     end
+    
+    
 
     print("\n <---> Program Exited")
 end
@@ -227,7 +234,10 @@ local function startThreads()
         parallel.waitForAny(startListener, startProgram)
         sleep(0.5)
     end
-    --print("\n <---> Crash detected, starting standalone listener...")
+
+    print("\n <---> Crash detected, closing crashed tab...")
+
+    
     --startListener()
 end
 
