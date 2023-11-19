@@ -170,7 +170,7 @@ local function startProgram()
         print("\n")
     end
 
-    if multishell.getTitle(TAB_INDEX) == TAB_INDEX and multishell.getFocus() ~= TAB_INDEX then
+    if multishell.getTitle(TAB_INDEX) == ":"..TAB_INDEX and multishell.getFocus() ~= TAB_INDEX then
         CRASHED = true 
         print("\n <---> Program Exited")
     end

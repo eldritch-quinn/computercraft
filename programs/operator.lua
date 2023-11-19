@@ -38,7 +38,7 @@ while true do
 
   elseif input == "end" then
 
-    multishell.setTitle(TAB_INDEX, TAB_INDEX)
+    multishell.setTitle(TAB_INDEX, ":"..TAB_INDEX)
   end
 
 end
