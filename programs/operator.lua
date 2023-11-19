@@ -1,7 +1,7 @@
 local setup = require("/lua/lib/setupUtils")
 local typeUtils = require("/lua/lib/typeUtils")
 local pretty = require("cc.pretty")
-local TAB_INDEX = multishell.getFocus()
+local TAB_INDEX = multishell.getCurrent()
 
 local args = { ... }
 
@@ -25,9 +25,8 @@ local testJson = '{"id":1,"rpv2":"000.001","color":"gold","array":[1,2,3],"boole
 while true do 
   term.clear()
   term.setCursorPos(1, 1)
-  term.write("Hello world!\n")
+  term.write("Hello world!\nI'm '"..TAB_INDEX.."'!")
 
-  term.write("Hello world!\n")
   print("\n > runningProgram : "..shell.getRunningProgram())
 
 

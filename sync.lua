@@ -171,7 +171,6 @@ local function startProgram()
 
     if shell.getRunningProgram() ~= shell.resolve("PROGRAM.lua") and multishell.getFocus() ~= TAB_INDEX then
         CRASHED = true 
-
         print("\n <---> Program Exited")
     end
 end
