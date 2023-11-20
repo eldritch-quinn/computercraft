@@ -38,9 +38,8 @@ local function decode64(data)
 end
 
 local function getFileFromRepo(file)
-    local res = http.get(REPO_FULL..file, {
-        ["Authorization"] = "token "..GITHUB_ACCESS_TOKEN,
-    })
+    local res = http.get(REPO_FULL..file, {["Authorization"] = "token "..GITHUB_ACCESS_TOKEN,})
+    --local res = http.get(REPO_FULL..file)
     if res == nil then return nil end
     local body = textutils.unserialiseJSON(res.readAll())
     local content = body["content"]
@@ -65,7 +64,7 @@ end
 
 local function getAndSaveServer()
     print("\n > Downloading sync server")
-    print("   - Downloading syncServer.lua from repo")
+    print("   - Downloading sync.lua from repo")
     getAndSave("/sync.lua", DIR.."/sync.lua")
     print(" - Sync server download successful")
 end
