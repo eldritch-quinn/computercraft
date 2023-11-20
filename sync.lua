@@ -95,7 +95,7 @@ end
 
 local function getDeps(path, quiet)
     local content = getFileFromRepo(path)
-
+    if content == nil then return nil end
     local matches = content:gmatch('require%(.'..DIR..'/lib/(.-).%)')
 
     local function insertDep(dep)

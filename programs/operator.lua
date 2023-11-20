@@ -1,8 +1,7 @@
 local setup = require("/lua/lib/setupUtils")
 local typeUtils = require("/lua/lib/typeUtils")
 local monitorUtils = require("/lua/lib/monitorUtils")
-local pretty = require("cc.pretty")
-local TAB_INDEX = multishell.getCount()
+--local pretty = require("cc.pretty")
 local args = { ... }
 
 local wrappedPers = setup.getPers({
