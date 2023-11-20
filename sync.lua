@@ -1,19 +1,12 @@
 local ARGS = { ... }
+
 local CHANNEL = tonumber(ARGS[1]) or 40100
-local TAB_INDEX = ARGS[2]
-local REPO_FULL = ARGS[3]
-local GITHUB_ACCESS_TOKEN = ARGS[4]
-local DIR = ARGS[5]
-local PROGRAM = ARGS[6]
-local PROGRAM_ARGS = ARGS[7]
-local DO_SETUP = ARGS[8] == "true" or false
-local ONLINE = true
-
-term.clear()
-multishell.setTitle(1, "shell")
-
-local P_D_I = {}
-
+local REPO_FULL = ARGS[2]
+local GITHUB_ACCESS_TOKEN = ARGS[3]
+local DIR = ARGS[4]
+local PROGRAM = ARGS[5]
+local PROGRAM_ARGS = ARGS[6]
+local DO_SETUP = ARGS[7] == "true" or false
 
 local DEPS = {}
 
@@ -22,49 +15,10 @@ local CRASHED = false
 local function printConfig()
     print(" > Configuration")
     print("    - Channel: "..CHANNEL)
-    print("    - Channel: "..CHANNEL)
     print("    - Full Repo URL: "..REPO_FULL)
     print("    - GitHub Access Token: "..GITHUB_ACCESS_TOKEN)
     print("    - Directory: "..DIR)
     print("    - Program: "..PROGRAM..PROGRAM_ARGS)
-end
-
-local function printProcessInformation(status)
-
-    local new_P_D_I = {}
-
-    new_P_D_I["STATUS"] = status
-    new_P_D_I["PROGRAM"] = PROGRAM
-    new_P_D_I["RUNNING"] = multishell.getCurrent()
-    new_P_D_I["FOCUS"] = multishell.getFocus()
-    new_P_D_I["TAB_INDEX"] = TAB_INDEX
-    new_P_D_I["CHANNEL"] = CHANNEL
-    new_P_D_I["PROGRAM_ARGS"] = PROGRAM_ARGS
-
-    local longest_key = #"PROGRAM_ARGS"
-
-    term.setCursorPos(1,1)
-    print(" > "..PROGRAM.." Information")
-    term.setCursorPos(4,2)
-    local x, y = term.getCursorPos()
-    for k, v in pairs(new_P_D_I) do
-        if P_D_I[k] == nil then
-            term.clearLine()
-            write(""..string.rep(' ', longest_key-#k)..k.." : "..v)
-        else
-            term.clearLine()
-        end
-        
-        y = y + 1
-        term.setCursorPos(4,y)
-        --term.setCursorPos(5,term.getCursorPos().y + 1)
-    end
-    
-    
-    --print("     > PROGRAM : "..PROCESS_DEBUG_INFORMATION.PROGRAM)
-    --print("     > RUNNING : "..PROCESS_DEBUG_INFORMATION.RUNNING)
-    --print("     > CHANNEL : "..PROCESS_DEBUG_INFORMATION.CHANNEL)
-    --print("     > DIR     : "..PROCESS_DEBUG_INFORMATION.DIR)
 end
 
 local function decode64(data)
@@ -110,10 +64,10 @@ local function getAndSave(repo_path, save_path)
 end
 
 local function getAndSaveServer()
-    print("\n > Downloading sync client")
-    print("   - Downloading sync.lua from repo")
+    print("\n > Downloading sync server")
+    print("   - Downloading syncServer.lua from repo")
     getAndSave("/sync.lua", DIR.."/sync.lua")
-    print(" - Sync client download successful")
+    print(" - Sync server download successful")
 end
 
 local function getAndSaveProgram()
@@ -189,39 +143,9 @@ local function runFirstTimeSetup()
 end
 
 local function startProgram()
-
-    --local shellIndex = multishell.getFocus()
-    local currentProcessCount = multishell.getCount()
-
-    if TAB_INDEX == "+" then
-
-        --print("\n <---> Starting Program")
-
-        TAB_INDEX = currentProcessCount + 1
-
-        --print("\n Program opening on Tab "..TAB_INDEX)
-
-        local tab = shell.openTab(DIR.."/programs/"..PROGRAM..''..PROGRAM_ARGS..'');
-        --if tab == nil then CRASHED = true end
-
-        multishell.setTitle(TAB_INDEX, "/"..multishell.getTitle(TAB_INDEX))
-        
-    else 
-        if currentProcessCount > 1 then
-            printProcessInformation("RUNNING")
-        else
-            printProcessInformation("OFFLINE")
-            CRASHED = true
-        end
-        
-
-        --print("\n <---> "..PROGRAM.." Running on Tab "..TAB_INDEX)
-        --print("\n    > runningProgram : "..shell.getRunningProgram())
-        --print("\n    > operator resolved path : "..shell.resolve(PROGRAM))
-        --print("\n")
-    end
-
-    if multishell.getTitle(TAB_INDEX) == "/" and multishell.getFocus() ~= TAB_INDEX then CRASHED = true end
+    print("\n <---> Starting Program")
+    CRASHED = not shell.run(DIR.."/programs/"..PROGRAM..PROGRAM_ARGS);
+    print("\n <---> Program Exited")
 end
 
 local function startListener()
@@ -229,6 +153,7 @@ local function startListener()
     local modem = peripheral.find("modem")
     if modem then modem.open(CHANNEL) end
     if modem == nil then print("\n <---> No modem present, networking disabled") end
+    
 
     local needsRestart = false
 
@@ -284,14 +209,12 @@ local function startListener()
 end
 
 local function startThreads()
+    term.clear();
     while not CRASHED do 
-
         parallel.waitForAny(startListener, startProgram)
         sleep(0.5)
-        
     end
-
-    print("\n <---> Crash detected, closing crashed tab...")
+    print("\n <---> Crash detected, starting standalone listener...")
     startListener()
 end
 
